@@ -2,16 +2,21 @@
 session_start();
 require_once("inc_OnlineStoresDB.php");
 require_once("class_OnlineStore.php");
-$Store = NULL;
+$storeID = array();
 
 if (class_exists("OnlineStore")) {
     if (isset($_SESSION['currentStore'])) {
         echo "Unserializing object.<br>";
-        $Store - unserialize($_SESSION['currentStore']);
+        $Store = unserialize($_SESSION['currentStore']);
     } else {
         echo "Instantiating new object.<br>";
         $Store = new OnlineStore();
     }
+    $Store->setStoreID($storeID);
+    $storeInfo = $Store->getStoreInformation();
+    echo "<pre>\n";
+    print_r($storeInfo);
+    echo "</pre>\n";
 } else {
     $errorMsgs[] = "The <em>OnlineStore</em> class is not available.";
     $Store = NULL;
